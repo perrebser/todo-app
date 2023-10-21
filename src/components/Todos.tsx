@@ -1,20 +1,20 @@
-interface Todo {
-    id:number,
-    title:string,
-    completed:boolean
+import { ListTodo } from "../types"
+
+interface Props {
+    todos:ListTodo
 }
 
-
 const Todos = ({todos}) =>{
-    console.log(todos)
     return(
+        <>
         <ul>
-            {todos.map(todo => {
+            {todos.map(todo => (
                 <li key={todo.id}>
                     {todo.title}
                 </li>
-            })}
+            ))}
         </ul>
+        </>
     )
 }
 

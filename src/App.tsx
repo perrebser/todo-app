@@ -8,7 +8,7 @@ const mockTodos = [
 ];
 
 const App = () => {
-  const [todos, setTodos] = useState(mockTodos)
+  const [todos] = useState(mockTodos)
   return (
     <>
       <h1 className="text-center font-sans text-4xl	font-bold py-5">Todo App</h1>
