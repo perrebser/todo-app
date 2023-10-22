@@ -1,6 +1,6 @@
-export interface Todo{
+export interface TodoType{
     id:number,
     title:string,
     completed:boolean
 }
-export type ListTodo = Todo[]
+export type ListTodoType = Todo[]
