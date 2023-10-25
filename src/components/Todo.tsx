@@ -4,12 +4,14 @@ import { CloseIcon } from "@chakra-ui/icons";
 
 interface Props extends TodoType {
     onRemoveTodo: (id:number) => void
+    onToggleCompleted:({id,completed}:Pick<TodoType,'id' | 'completed'>)=> void
 } 
 
-const Todo: React.FC<Props> = ({ id, title, completed,onRemoveTodo }) => {
+const Todo: React.FC<Props> = ({ id, title, completed,onRemoveTodo,onToggleCompleted }) => {
+ 
   return (
     <div className='flex justify-between gap-11'>
-      <Checkbox colorScheme="green" checked={completed} onChange={() => {}}>
+      <Checkbox colorScheme="green" checked={completed}  onChange={() => {onToggleCompleted({id,completed})}}>
         {title}
       </Checkbox>
       <Button
