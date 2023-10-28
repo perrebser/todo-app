@@ -9,6 +9,7 @@ import {
   CardFooter,
 } from "@chakra-ui/react";
 import Todo from "./Todo";
+import PreFooter from "./PreFooter";
 
 interface Props {
   todos: ListTodoType;
@@ -17,12 +18,19 @@ interface Props {
     id,
     completed,
   }: Pick<TodoType, "id" | "completed">) => void;
+  onFilterTodo: (filterId:number)=>void;
 }
 
-const Todos: React.FC<Props> = ({ todos, onRemoveTodo, onToggleCompleted }) => {
+const Todos: React.FC<Props> = ({ todos, onRemoveTodo, onToggleCompleted, onFilterTodo }) => {
   return (
     <div className="flex justify-center">
-      <Card align="center" className="w-1/3 my-10 " size={"sm"} boxShadow={"lg"} variant={"outline"}>
+      <Card
+        align="center"
+        className="w-1/3 my-10 "
+        size={"sm"}
+        boxShadow={"lg"}
+        variant={"outline"}
+      >
         <CardHeader>
           <Heading size="lg">Todos</Heading>
         </CardHeader>
@@ -46,9 +54,14 @@ const Todos: React.FC<Props> = ({ todos, onRemoveTodo, onToggleCompleted }) => {
           </List>
         </CardBody>
         <CardFooter>
-            <p className="text-xs text-slate-300">
+          <div className="flex justify-between items-center">
+            <strong className="text-xs text-slate-300">
               Completed Todos: {todos.filter((todo) => todo.completed).length}
-            </p>
+            </strong>
+            <PreFooter
+            onFilterTodo={onFilterTodo}
+             />
+          </div>
         </CardFooter>
       </Card>
     </div>

@@ -1,5 +1,5 @@
-import { useState } from "react";
-import { TodoType } from "./types";
+import { useEffect, useState } from "react";
+import { ListTodoType, TodoType } from "./types";
 import Todos from "./components/Todos";
 import HeaderTodo from "./components/HeaderTodo";
 import Footer from "./components/Footer";
@@ -12,7 +12,9 @@ const mockTodos = [
 
 const App = () => {
   const [todos, setTodos] = useState(mockTodos);
+  const [filteredTodos, setFilteredTodos] = useState(mockTodos);
   const [state, setState] = useState("");
+  const [filterId, setFilterId] = useState<number>(0);
 
   const handleRemoveTodo = (id: number): void => {
     const newTodos = todos.filter((todo) => todo.id !== id);
@@ -56,8 +58,27 @@ const App = () => {
     }
   };
 
-  const handleButtonClick=(): void => {
-    handleAddTodo(state)
+  const handleButtonClick = (): void => {
+    handleAddTodo(state);
+  };
+  useEffect(() => {
+      if (filterId === 1) {
+        const completedTodos = todos.filter((todo) => 
+          todo.completed
+        );
+        setFilteredTodos(completedTodos)
+      } else if (filterId === 2) {
+        const activeTodos=todos.filter((todo)=>
+          !todo.completed
+        )
+        setFilteredTodos(activeTodos)
+      } else if(filterId===0) {
+        setFilteredTodos(todos)
+      }
+  }, [filterId,todos]);
+
+  const handleFilter = (filterId: number): void => {
+    setFilterId(filterId)
   }
   return (
     <>
@@ -71,12 +92,13 @@ const App = () => {
       </div>
       <div>
         <Todos
-          todos={todos}
+          todos={filteredTodos}
           onRemoveTodo={handleRemoveTodo}
           onToggleCompleted={handleCompleted}
+          onFilterTodo={handleFilter}
         />
       </div>
-      <Footer/>
+      <Footer />
     </>
   );
 };
