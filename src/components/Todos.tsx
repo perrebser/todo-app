@@ -22,7 +22,7 @@ interface Props {
 const Todos: React.FC<Props> = ({ todos, onRemoveTodo, onToggleCompleted }) => {
   return (
     <div className="flex justify-center">
-      <Card align="center" className="w-1/3 my-10" size={"sm"} variant={"outline"}>
+      <Card align="center" className="w-1/3 my-10 " size={"sm"} boxShadow={"lg"} variant={"outline"}>
         <CardHeader>
           <Heading size="lg">Todos</Heading>
         </CardHeader>

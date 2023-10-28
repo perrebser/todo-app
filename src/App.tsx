@@ -2,6 +2,7 @@ import { useState } from "react";
 import { TodoType } from "./types";
 import Todos from "./components/Todos";
 import HeaderTodo from "./components/HeaderTodo";
+import Footer from "./components/Footer";
 
 const mockTodos = [
   { id: 1, title: "Comprar PannerNode", completed: false },
@@ -12,7 +13,7 @@ const mockTodos = [
 const App = () => {
   const [todos, setTodos] = useState(mockTodos);
   const [state, setState] = useState("");
-  
+
   const handleRemoveTodo = (id: number): void => {
     const newTodos = todos.filter((todo) => todo.id !== id);
     setTodos(newTodos);
@@ -31,7 +32,6 @@ const App = () => {
       }
       return todo;
     });
-    // console.log(newTodos)
     setTodos(newTodos);
   };
 
@@ -46,19 +46,29 @@ const App = () => {
     setTodos(newTodos);
   };
 
-  const handleChange = (e:React.ChangeEvent<HTMLInputElement>): void => {
-    setState(e.target.value)
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>): void => {
+    setState(e.target.value);
   };
-  const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) =>{
+  const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
     if (e.keyCode === 13) {
-      if (state=== "") return;
-      handleAddTodo(state)
+      if (state === "") return;
+      handleAddTodo(state);
     }
+  };
+
+  const handleButtonClick=(): void => {
+    handleAddTodo(state)
   }
   return (
     <>
       <h1 className="text-center font-sans text-4xl	font-bold py-5">Todo App</h1>
-      <HeaderTodo onHandleInputChange={handleChange} onHandleKeyDown={handleKeyDown} />
+      <div className="flex justify-center">
+        <HeaderTodo
+          onHandleInputChange={handleChange}
+          onHandleKeyDown={handleKeyDown}
+          onButtonClick={handleButtonClick}
+        />
+      </div>
       <div>
         <Todos
           todos={todos}
@@ -66,6 +76,7 @@ const App = () => {
           onToggleCompleted={handleCompleted}
         />
       </div>
+      <Footer/>
     </>
   );
 };
