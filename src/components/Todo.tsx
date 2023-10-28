@@ -11,7 +11,7 @@ const Todo: React.FC<Props> = ({ id, title, completed,onRemoveTodo,onToggleCompl
  
   return (
     <div className='flex justify-between gap-11'>
-      <Checkbox colorScheme="green"  checked={completed}  onChange={() => {onToggleCompleted({id,completed})}}>
+      <Checkbox colorScheme="green" checked={completed}  onChange={() => {onToggleCompleted({id,completed})}}>
         {title}
       </Checkbox>
       <Button

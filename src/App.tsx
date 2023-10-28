@@ -4,15 +4,9 @@ import Todos from "./components/Todos";
 import HeaderTodo from "./components/HeaderTodo";
 import Footer from "./components/Footer";
 
-const mockTodos = [
-  { id: 1, title: "Comprar PannerNode", completed: false },
-  { id: 2, title: "Comprar Panner", completed: false },
-  { id: 3, title: "Comprar PannerNode", completed: false },
-];
-
 const App = () => {
-  const [todos, setTodos] = useState(mockTodos);
-  const [filteredTodos, setFilteredTodos] = useState(mockTodos);
+  const [todos, setTodos] = useState<ListTodoType>(JSON.parse(localStorage.getItem('items') || "[]"));
+  const [filteredTodos, setFilteredTodos] = useState<ListTodoType>([]);
   const [state, setState] = useState("");
   const [filterId, setFilterId] = useState<number>(0);
 
@@ -37,8 +31,25 @@ const App = () => {
     setTodos(newTodos);
   };
 
+ useEffect(() => {
+   localStorage.setItem('items',JSON.stringify(todos))   
+ }, [todos])
+
+// useEffect(()=>{
+//   const items:ListTodoType=JSON.parse(localStorage.getItem('item')) 
+//   if (items){
+//     setTodos(items)
+//   }
+// }, [])
+
   const handleAddTodo = (title: string): void => {
-    const lastIndex: number = todos[todos.length - 1].id;
+    let lastIndex: number
+    if(todos.length === 0){
+      lastIndex=0
+    }else{
+      lastIndex=todos[todos.length - 1].id
+    }
+    console.log(lastIndex)
     const newTodo = {
       id: lastIndex + 1,
       title: title,
