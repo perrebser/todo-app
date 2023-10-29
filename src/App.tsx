@@ -55,7 +55,7 @@ const App = () => {
     };
     const newTodos = todos.concat(newTodo);
     setTodos(newTodos);
-    setState("")
+    setState("");
   };
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>): void => {
@@ -67,10 +67,19 @@ const App = () => {
       handleAddTodo(state);
     }
   };
-
+  const handleEditTodo = (id: number, title: string): void => {
+    const updatedTodos = todos.map((todo) => {
+      if (todo.id === id) {
+        todo.title=title
+      }
+      return todo;
+    });
+    setTodos(updatedTodos);
+  };
   const handleButtonClick = (): void => {
     handleAddTodo(state);
   };
+
   useEffect(() => {
     if (filterId === 1) {
       const completedTodos = todos.filter((todo) => todo.completed);
@@ -86,6 +95,7 @@ const App = () => {
   const handleFilter = (filterId: number): void => {
     setFilterId(filterId);
   };
+
   return (
     <>
       <h1 className="text-center font-sans text-4xl	font-bold py-5">Todo App</h1>
@@ -104,6 +114,7 @@ const App = () => {
           onToggleCompleted={handleCompleted}
           onFilterTodo={handleFilter}
           onRemoveCompleted={handleRemoveCompleted}
+          onEditTodo={handleEditTodo}
         />
       </div>
       <Footer />

@@ -6,7 +6,7 @@ interface Props{
   onHandleInputChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
   onHandleKeyDown: (e: React.KeyboardEvent<HTMLInputElement>) => void;
   onButtonClick: () => void;
-  state:typeof React.useState<string>;
+  state:string;
 }
 
 const HeaderTodo: React.FC<Props> = ({onHandleInputChange,onHandleKeyDown,onButtonClick,state}) => {

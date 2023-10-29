@@ -21,6 +21,8 @@ interface Props {
   }: Pick<TodoType, "id" | "completed">) => void;
   onFilterTodo: (filterId: number) => void;
   onRemoveCompleted: ()=>void;
+  onEditTodo:(id:number,title:string)=>void;
+ 
 }
 
 const Todos: React.FC<Props> = ({
@@ -29,7 +31,10 @@ const Todos: React.FC<Props> = ({
   onToggleCompleted,
   onFilterTodo,
   onRemoveCompleted,
+  onEditTodo,
+  
 }) => {
+
   return (
     <div className="flex justify-center">
       <Card
@@ -42,7 +47,7 @@ const Todos: React.FC<Props> = ({
         <CardHeader>
           <Heading size="lg">Todos</Heading>
         </CardHeader>
-        <CardBody>
+        <CardBody className="w-full">
           <List spacing={4}>
             {todos.map((todo) => (
               <ListItem
@@ -56,6 +61,8 @@ const Todos: React.FC<Props> = ({
                   completed={todo.completed}
                   onToggleCompleted={onToggleCompleted}
                   onRemoveTodo={onRemoveTodo}
+                  onEditTodo={onEditTodo}
+                 
                 />
               </ListItem>
             ))}
@@ -69,6 +76,7 @@ const Todos: React.FC<Props> = ({
             <PreFooter onFilterTodo={onFilterTodo} />
             {todos.filter((todo) => todo.completed).length > 0 && (
               <Button
+                className="hover:text-red-600"
                 colorScheme="cyan"
                 size={"sm"}
                 variant="ghost"
