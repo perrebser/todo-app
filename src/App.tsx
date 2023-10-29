@@ -5,7 +5,9 @@ import HeaderTodo from "./components/HeaderTodo";
 import Footer from "./components/Footer";
 
 const App = () => {
-  const [todos, setTodos] = useState<ListTodoType>(JSON.parse(localStorage.getItem('items') || "[]"));
+  const [todos, setTodos] = useState<ListTodoType>(
+    JSON.parse(localStorage.getItem("items") || "[]")
+  );
   const [filteredTodos, setFilteredTodos] = useState<ListTodoType>([]);
   const [state, setState] = useState("");
   const [filterId, setFilterId] = useState<number>(0);
@@ -31,25 +33,21 @@ const App = () => {
     setTodos(newTodos);
   };
 
- useEffect(() => {
-   localStorage.setItem('items',JSON.stringify(todos))   
- }, [todos])
-
-// useEffect(()=>{
-//   const items:ListTodoType=JSON.parse(localStorage.getItem('item')) 
-//   if (items){
-//     setTodos(items)
-//   }
-// }, [])
+  const handleRemoveCompleted = () => {
+    const newTodos = todos.filter((todo) => !todo.completed);
+    setTodos(newTodos);
+  };
+  useEffect(() => {
+    localStorage.setItem("items", JSON.stringify(todos));
+  }, [todos]);
 
   const handleAddTodo = (title: string): void => {
-    let lastIndex: number
-    if(todos.length === 0){
-      lastIndex=0
-    }else{
-      lastIndex=todos[todos.length - 1].id
+    let lastIndex: number;
+    if (todos.length === 0) {
+      lastIndex = 0;
+    } else {
+      lastIndex = todos[todos.length - 1].id;
     }
-    console.log(lastIndex)
     const newTodo = {
       id: lastIndex + 1,
       title: title,
@@ -73,24 +71,20 @@ const App = () => {
     handleAddTodo(state);
   };
   useEffect(() => {
-      if (filterId === 1) {
-        const completedTodos = todos.filter((todo) => 
-          todo.completed
-        );
-        setFilteredTodos(completedTodos)
-      } else if (filterId === 2) {
-        const activeTodos=todos.filter((todo)=>
-          !todo.completed
-        )
-        setFilteredTodos(activeTodos)
-      } else if(filterId===0) {
-        setFilteredTodos(todos)
-      }
-  }, [filterId,todos]);
+    if (filterId === 1) {
+      const completedTodos = todos.filter((todo) => todo.completed);
+      setFilteredTodos(completedTodos);
+    } else if (filterId === 2) {
+      const activeTodos = todos.filter((todo) => !todo.completed);
+      setFilteredTodos(activeTodos);
+    } else if (filterId === 0) {
+      setFilteredTodos(todos);
+    }
+  }, [filterId, todos]);
 
   const handleFilter = (filterId: number): void => {
-    setFilterId(filterId)
-  }
+    setFilterId(filterId);
+  };
   return (
     <>
       <h1 className="text-center font-sans text-4xl	font-bold py-5">Todo App</h1>
@@ -107,6 +101,7 @@ const App = () => {
           onRemoveTodo={handleRemoveTodo}
           onToggleCompleted={handleCompleted}
           onFilterTodo={handleFilter}
+          onRemoveCompleted={handleRemoveCompleted}
         />
       </div>
       <Footer />

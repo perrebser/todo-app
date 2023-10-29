@@ -7,6 +7,7 @@ import {
   Heading,
   CardBody,
   CardFooter,
+  Button,
 } from "@chakra-ui/react";
 import Todo from "./Todo";
 import PreFooter from "./PreFooter";
@@ -18,10 +19,17 @@ interface Props {
     id,
     completed,
   }: Pick<TodoType, "id" | "completed">) => void;
-  onFilterTodo: (filterId:number)=>void;
+  onFilterTodo: (filterId: number) => void;
+  onRemoveCompleted: ()=>void;
 }
 
-const Todos: React.FC<Props> = ({ todos, onRemoveTodo, onToggleCompleted, onFilterTodo }) => {
+const Todos: React.FC<Props> = ({
+  todos,
+  onRemoveTodo,
+  onToggleCompleted,
+  onFilterTodo,
+  onRemoveCompleted,
+}) => {
   return (
     <div className="flex justify-center">
       <Card
@@ -58,9 +66,17 @@ const Todos: React.FC<Props> = ({ todos, onRemoveTodo, onToggleCompleted, onFilt
             <strong className="text-xs text-slate-300">
               Completed Todos: {todos.filter((todo) => todo.completed).length}
             </strong>
-            <PreFooter
-            onFilterTodo={onFilterTodo}
-             />
+            <PreFooter onFilterTodo={onFilterTodo} />
+            {todos.filter((todo) => todo.completed).length > 0 && (
+              <Button
+                colorScheme="cyan"
+                size={"sm"}
+                variant="ghost"
+                onClick={() => {onRemoveCompleted()}}
+              >
+                Delete Completed
+              </Button>
+            )}
           </div>
         </CardFooter>
       </Card>
