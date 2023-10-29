@@ -6,12 +6,13 @@ interface Props{
   onHandleInputChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
   onHandleKeyDown: (e: React.KeyboardEvent<HTMLInputElement>) => void;
   onButtonClick: () => void;
+  state:typeof React.useState<string>;
 }
 
-const HeaderTodo: React.FC<Props> = ({onHandleInputChange,onHandleKeyDown,onButtonClick}) => {
+const HeaderTodo: React.FC<Props> = ({onHandleInputChange,onHandleKeyDown,onButtonClick,state}) => {
   return (
-    <div className="w-1/3 justify-between gap-3 flex">
-      <Input placeholder="Write Todo..." autoFocus={true} onKeyDown={(e)=>{onHandleKeyDown(e)}} onChange={(e)=>{onHandleInputChange(e)}}/>
+    <div className="justify-between gap-3 flex">
+      <Input placeholder="Write Todo..." autoFocus={true} onKeyDown={(e)=>{onHandleKeyDown(e)}} value={state.toString()} onChange={(e)=>{onHandleInputChange(e)}}/>
       <Button colorScheme='blue' onClick={()=>{onButtonClick()}}>Add Todo</Button>
     </div>
   );

@@ -34,7 +34,7 @@ const Todos: React.FC<Props> = ({
     <div className="flex justify-center">
       <Card
         align="center"
-        className="w-1/3 my-10 "
+        className="my-10"
         size={"sm"}
         boxShadow={"lg"}
         variant={"outline"}

@@ -9,7 +9,7 @@ const App = () => {
     JSON.parse(localStorage.getItem("items") || "[]")
   );
   const [filteredTodos, setFilteredTodos] = useState<ListTodoType>([]);
-  const [state, setState] = useState("");
+  const [state, setState] = useState<string>("");
   const [filterId, setFilterId] = useState<number>(0);
 
   const handleRemoveTodo = (id: number): void => {
@@ -55,6 +55,7 @@ const App = () => {
     };
     const newTodos = todos.concat(newTodo);
     setTodos(newTodos);
+    setState("")
   };
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>): void => {
@@ -93,6 +94,7 @@ const App = () => {
           onHandleInputChange={handleChange}
           onHandleKeyDown={handleKeyDown}
           onButtonClick={handleButtonClick}
+          state={state}
         />
       </div>
       <div>
